@@ -12,31 +12,34 @@ class ObatSeeder extends Seeder
     {
         $supliers = DB::table('supliers')->pluck('KdSuplier');
 
-        DB::table('obats')->insert([
-            [
-                'KdObat' => Str::uuid(),
-                'NmObat' => 'Paracetamol 500mg',
-                'Jenis' => 'Tablet',
-                'Satuan' => 'Strip',
-                'HargaBeli' => 5000,
-                'HargaJual' => 8000,
-                'Stok' => 200,
-                'KdSuplier' => $supliers->random(),
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'KdObat' => Str::uuid(),
-                'NmObat' => 'Amoxicillin 250mg',
-                'Jenis' => 'Kapsul',
-                'Satuan' => 'Box',
-                'HargaBeli' => 15000,
-                'HargaJual' => 22000,
-                'Stok' => 120,
-                'KdSuplier' => $supliers->random(),
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-        ]);
+        $obatData = [
+            'Paracetamol 500mg',
+            'Amoxicillin 250mg',
+            'Ibuprofen 400mg',
+            'Aspirin 100mg',
+            'Metformin 500mg',
+            'Vitamin C 500mg',
+            'Antibiotic 300mg',
+            'Cough Syrup',
+            'Anti-allergy',
+            'Multivitamin'
+        ];
+
+        foreach ($obatData as $obat) {
+            DB::table('obats')->insert([
+                [
+                    'KdObat' => Str::uuid(),
+                    'NmObat' => $obat,
+                    'Jenis' => 'Tablet',
+                    'Satuan' => 'Strip',
+                    'HargaBeli' => rand(4000, 15000),
+                    'HargaJual' => rand(6000, 25000),
+                    'Stok' => rand(50, 200),
+                    'KdSuplier' => $supliers->random(),
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ],
+            ]);
+        }
     }
 }

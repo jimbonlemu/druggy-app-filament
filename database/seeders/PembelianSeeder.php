@@ -12,15 +12,17 @@ class PembelianSeeder extends Seeder
     {
         $supliers = DB::table('supliers')->pluck('KdSuplier');
 
-        DB::table('pembelians')->insert([
-            [
-                'Nota' => Str::uuid(),
-                'TglNota' => now()->subDays(10),
-                'Diskon' => 5,
-                'KdSuplier' => $supliers->random(),
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-        ]);
+        for ($i = 0; $i < 10; $i++) {
+            DB::table('pembelians')->insert([
+                [
+                    'Nota' => Str::uuid(),
+                    'TglNota' => now()->subDays(rand(1, 30)),
+                    'Diskon' => rand(1, 20),
+                    'KdSuplier' => $supliers->random(),
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ],
+            ]);
+        }
     }
 }

@@ -10,18 +10,20 @@ class PenjualanDetailSeeder extends Seeder
 {
     public function run(): void
     {
-        $penjualan = DB::table('penjualans')->first();
-        $obat = DB::table('obats')->first();
+        $penjualans = DB::table('penjualans')->pluck('Nota');
+        $obats = DB::table('obats')->pluck('KdObat');
 
-        DB::table('penjualan_details')->insert([
-            [
-                'id' => Str::uuid(),
-                'Nota' => $penjualan->Nota,
-                'KdObat' => $obat->KdObat,
-                'Jumlah' => 2,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-        ]);
+        for ($i = 0; $i < 10; $i++) {
+            DB::table('penjualan_details')->insert([
+                [
+                    'id' => Str::uuid(),
+                    'Nota' => $penjualans->random(),
+                    'KdObat' => $obats->random(),
+                    'Jumlah' => rand(1, 5),
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ],
+            ]);
+        }
     }
 }

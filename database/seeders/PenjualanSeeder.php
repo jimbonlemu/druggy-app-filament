@@ -12,15 +12,17 @@ class PenjualanSeeder extends Seeder
     {
         $pelanggan = DB::table('pelanggans')->pluck('KdPelanggan');
 
-        DB::table('penjualans')->insert([
-            [
-                'Nota' => Str::uuid(),
-                'TglNota' => now()->subDays(5),
-                'KdPelanggan' => $pelanggan->random(),
-                'Diskon' => 10,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-        ]);
+        for ($i = 0; $i < 10; $i++) {
+            DB::table('penjualans')->insert([
+                [
+                    'Nota' => Str::uuid(),
+                    'TglNota' => now()->subDays(rand(1, 30)),
+                    'KdPelanggan' => $pelanggan->random(),
+                    'Diskon' => rand(5, 20),
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ],
+            ]);
+        }
     }
 }

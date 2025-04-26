@@ -10,25 +10,31 @@ class SuplierSeeder extends Seeder
 {
     public function run(): void
     {
-        DB::table('supliers')->insert([
-            [
-                'KdSuplier' => Str::uuid(),
-                'NmSuplier' => 'PT Kimia Farma',
-                'Alamat' => 'Jl. Veteran No. 10',
-                'Kota' => 'Jakarta',
-                'Telpon' => '021-1234567',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'KdSuplier' => Str::uuid(),
-                'NmSuplier' => 'PT Indofarma',
-                'Alamat' => 'Jl. Sudirman No. 55',
-                'Kota' => 'Bandung',
-                'Telpon' => '022-7654321',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-        ]);
+        $suplierData = [
+            'PT Kimia Farma',
+            'PT Indofarma',
+            'PT Sidomuncul',
+            'PT Kalbe Farma',
+            'PT Herbalife',
+            'PT Dexa Medica',
+            'PT Novartis',
+            'PT Merck',
+            'PT Roche',
+            'PT Sanofi'
+        ];
+
+        foreach ($suplierData as $nama) {
+            DB::table('supliers')->insert([
+                [
+                    'KdSuplier' => Str::uuid(),
+                    'NmSuplier' => $nama,
+                    'Alamat' => 'Jl. ' . Str::random(10) . ' No. ' . rand(1, 100),
+                    'Kota' => 'Jakarta',
+                    'Telpon' => '021-' . rand(1000000, 9999999),
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ],
+            ]);
+        }
     }
 }

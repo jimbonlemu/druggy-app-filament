@@ -10,25 +10,31 @@ class PelangganSeeder extends Seeder
 {
     public function run(): void
     {
-        DB::table('pelanggans')->insert([
-            [
-                'KdPelanggan' => Str::uuid(),
-                'NmPelanggan' => 'Budi Santoso',
-                'Alamat' => 'Jl. Merdeka No. 45',
-                'Kota' => 'Surabaya',
-                'Telpon' => '031-5678901',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'KdPelanggan' => Str::uuid(),
-                'NmPelanggan' => 'Siti Aminah',
-                'Alamat' => 'Jl. Ahmad Yani No. 12',
-                'Kota' => 'Yogyakarta',
-                'Telpon' => '0274-123456',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-        ]);
+        $pelangganData = [
+            'Budi Santoso',
+            'Siti Aminah',
+            'Agus Prabowo',
+            'Dina Sari',
+            'Rudi Setiawan',
+            'Mira Cahya',
+            'Yuni Siska',
+            'Vera Puspita',
+            'Dewi Kurnia',
+            'Farhan Rizki'
+        ];
+
+        foreach ($pelangganData as $nama) {
+            DB::table('pelanggans')->insert([
+                [
+                    'KdPelanggan' => Str::uuid(),
+                    'NmPelanggan' => $nama,
+                    'Alamat' => 'Jl. Merdeka No. ' . rand(1, 100),
+                    'Kota' => 'Surabaya',
+                    'Telpon' => '031-' . rand(1000000, 9999999),
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ],
+            ]);
+        }
     }
 }

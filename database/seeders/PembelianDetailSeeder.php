@@ -10,18 +10,20 @@ class PembelianDetailSeeder extends Seeder
 {
     public function run(): void
     {
-        $pembelian = DB::table('pembelians')->first();
-        $obat = DB::table('obats')->first();
+        $pembelians = DB::table('pembelians')->pluck('Nota');
+        $obats = DB::table('obats')->pluck('KdObat');
 
-        DB::table('pembelian_details')->insert([
-            [
-                'id' => Str::uuid(),
-                'Nota' => $pembelian->Nota,
-                'KdObat' => $obat->KdObat,
-                'Jumlah' => 100,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-        ]);
+        for ($i = 0; $i < 10; $i++) {
+            DB::table('pembelian_details')->insert([
+                [
+                    'id' => Str::uuid(),
+                    'Nota' => $pembelians->random(),
+                    'KdObat' => $obats->random(),
+                    'Jumlah' => rand(50, 100),
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ],
+            ]);
+        }
     }
 }
