@@ -12,7 +12,7 @@ class CreatePenjualan extends CreateRecord
 
      protected function mutateFormDataBeforeCreate(array $data): array
     {
-        $data['Nota'] = (string) Str::uuid(); // Buat UUID manual kalau mau
+        $data['Nota'] = (string) Str::uuid();
         return $data;
     }
 
@@ -20,7 +20,7 @@ class CreatePenjualan extends CreateRecord
     {
         foreach ($this->record->penjualanDetail as $detail) {
             $obat = $detail->obat;
-            $obat->decrement('Stok', $detail->Jumlah); // Kurangi stok obat
+            $obat->decrement('Stok', $detail->Jumlah);
         }
     }
 }
