@@ -43,9 +43,15 @@ class PenjualanResource extends Resource
                     ->schema([
                         Forms\Components\Select::make('KdObat')
                             ->label('Obat')
+                            ->relationship('obat', 'NmObat')
                             ->options(function () {
                                 return Obat::where('stok', '>', 0)
-                                    ->pluck('NmObat', 'KdObat');
+                                    ->get()
+                                    ->mapWithKeys(function ($obat) {
+                                        return [
+                                            $obat->KdObat => "{$obat->NmObat} ({$obat->Stok} stok)",
+                                        ];
+                                    });
                             })
                             ->required()
                             ->searchable(),

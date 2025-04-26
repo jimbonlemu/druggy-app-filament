@@ -3,15 +3,13 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\PembelianResource\Pages;
-use App\Filament\Resources\PembelianResource\RelationManagers;
+use App\Models\Obat;
 use App\Models\Pembelian;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class PembelianResource extends Resource
 {
@@ -40,10 +38,18 @@ class PembelianResource extends Resource
                     ->relationship()
                     ->schema([
                         Forms\Components\Select::make('KdObat')
+                            ->label('Obat')
                             ->relationship('obat', 'NmObat')
-                            ->searchable()
-                            ->preload()
-                            ->required(),
+                            ->options(function () {
+                                return Obat::all()
+                                    ->mapWithKeys(function ($obat) {
+                                        return [
+                                            $obat->KdObat => "{$obat->NmObat} ({$obat->Stok} stok)",
+                                        ];
+                                    });
+                            })
+                            ->required()
+                            ->searchable(),
                         Forms\Components\TextInput::make('Jumlah')
                             ->numeric()
                             ->required(),
