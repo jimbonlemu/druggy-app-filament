@@ -31,9 +31,13 @@ class PembelianResource extends Resource
                     ->default(now())
                     ->required(),
                 Forms\Components\TextInput::make('Diskon')
+                    ->label('Diskon (%)')
                     ->required()
                     ->numeric()
-                    ->default(0),
+                    ->default(0)
+                    ->minValue(0)
+                    ->maxValue(100)
+                    ->helperText('Masukkan nilai diskon dalam persen (0-100)'),
                 Forms\Components\Repeater::make('pembelianDetail')
                     ->relationship()
                     ->schema([
@@ -56,7 +60,6 @@ class PembelianResource extends Resource
                     ])
                     ->columnSpan('full')
                     ->defaultItems(1),
-
             ]);
     }
 
@@ -72,7 +75,8 @@ class PembelianResource extends Resource
                     ->date()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('Diskon')
-                    ->numeric()
+                    ->label('Diskon (%)')
+                    ->formatStateUsing(fn($state) => $state . '%')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('suplier.NmSuplier')
                     ->label('Suplier')
@@ -106,7 +110,6 @@ class PembelianResource extends Resource
                     ->icon('heroicon-o-printer')
                     ->url(fn(Pembelian $record) => route('pembelian.print', $record))
                     ->openUrlInNewTab(),
-
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -114,6 +117,7 @@ class PembelianResource extends Resource
                 ]),
             ]);
     }
+
 
     public static function getRelations(): array
     {

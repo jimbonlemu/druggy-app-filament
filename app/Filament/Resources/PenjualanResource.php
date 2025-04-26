@@ -34,9 +34,13 @@ class PenjualanResource extends Resource
                     ->preload()
                     ->required(),
                 Forms\Components\TextInput::make('Diskon')
+                    ->label('Diskon (%)')
                     ->required()
                     ->numeric()
-                    ->default(0),
+                    ->default(0)
+                    ->minValue(0)
+                    ->maxValue(100)
+                    ->helperText('Masukkan nilai diskon dalam persen (0-100)'),
                 Repeater::make('penjualanDetail')
                     ->label('Detail Penjualan')
                     ->relationship()
@@ -91,7 +95,8 @@ class PenjualanResource extends Resource
                         return $record->penjualanDetail->count();
                     }),
                 Tables\Columns\TextColumn::make('Diskon')
-                    ->numeric()
+                    ->label('Diskon (%)')
+                    ->formatStateUsing(fn($state) => $state . '%')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
