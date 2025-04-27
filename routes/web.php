@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::redirect('/', '/admin');
+Route::redirect('/', '/run');
 
 Route::get('/penjualan/{penjualan}/cetak', [\App\Http\Controllers\PenjualanController::class, 'cetak'])->name('penjualan.cetak');
 Route::get('/pembelian/{pembelian}/print', [\App\Http\Controllers\PembelianController::class, 'print'])->name('pembelian.print');
